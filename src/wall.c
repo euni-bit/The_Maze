@@ -17,14 +17,16 @@ void changeColorIntensity(color_t *color, float factor)
 	*color = a | (r & 0x00FF0000) | (g & 0x0000FF00) | (b & 0x000000FF);
 }
 
-/**
- * renderFloor - render floor projection
- *
- * @WallBottomPixel: wall bottom pixel
- * @texelColor: texture color for current pixel
- * @x: current element in the rays array
-*/
 
+/**
+ * renderFloor - Renders the floor projection based on the current ray.
+ * @wallBottomPixel: The pixel position of the bottom of the wall.
+ * @texelColor: Pointer to the texture color for the current pixel.
+ * @x: The current x-coordinate in the rays array.
+ *
+ * This function projects the floor using the ray's information and
+ * the player's position.
+ */
 void renderFloor(int wallBottomPixel, color_t *texelColor, int x)
 {
 	int y, texture_height, texture_width, textureOffsetY, textureOffsetX;
@@ -54,12 +56,13 @@ void renderFloor(int wallBottomPixel, color_t *texelColor, int x)
 }
 
 /**
- * renderCeil - render Ceil projection
- * @WallTopPixel: wall top pixel
- * @texelColor: texture color for current pixel
- * @x: current element in the rays array
-*/
-
+ * renderCeil - Renders the ceiling projection based on the current ray.
+ * @wallTopPixel: The pixel position of the top of the wall.
+ * @texelColor: Pointer to the texture color for the current pixel.
+ * @x: The current x-coordinate in the rays array.
+ *
+ * This function projects the ceiling using the ray's information and the player's position.
+ */
 void renderCeil(int wallTopPixel, color_t *texelColor, int x)
 {
 	int y, texture_width, texture_height, textureOffsetY, textureOffsetX;
