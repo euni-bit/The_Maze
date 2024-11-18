@@ -4,7 +4,6 @@ bool GameRunning = false;
 int TicksLastFrame;
 player_t player;
 bool isWeaponFiring = false;
-bool isRaining = false;
 
 /**
  * setup_game - initialize player variables and load wall textures
@@ -25,6 +24,7 @@ void setup_game(void)
 	player.rotationAngle = PI / 2;
 	WallTexturesready();
 	loadWeaponTexture();
+	initializeRain();
 }
 
 
@@ -49,6 +49,11 @@ void update_game(void)
 	movePlayer(DeltaTime);
 	castAllRays();
 	updateWeaponAnimation();
+
+	if (isRaining)
+	{
+		updateRain(DeltaTime);
+	}
 }
 
 /**

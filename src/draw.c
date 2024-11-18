@@ -1,5 +1,9 @@
 #include "../headers/header.h"
 
+
+color_t colorBuffer[SCREEN_WIDTH * SCREEN_HEIGHT];
+
+
 /**
  * drawRect - draw a rectangle
  * @x: x coordinate
@@ -11,11 +15,15 @@
 
 void drawRect(int x, int y, int width, int height, color_t color)
 {
-	int i, j;
+	printf("Drawing rectangle at (%d, %d) with size %dx%d and color 0x%X\n", x, y, width, height, color);
 
-	for (i = x; i <= (x + width); i++)
-		for (j = y; j <= (y + height); j++)
+	for (int i = x; i < (x + width); i++)
+	{
+		for (int j = y; j < (y + height); j++)
+		{
 			drawPixel(i, j, color);
+		}
+	}
 }
 
 /**
@@ -59,11 +67,16 @@ void render_game(void)
 	clearColorBuffer(0xFF000000);
 
 	renderWall();
-
 	renderMap();
 	renderRays();
 	renderPlayer();
 	renderWeapon();
+
+	if (isRaining)
+	{
+		renderRain();
+	}
+
 	renderColorBuffer();
 }
 
@@ -97,3 +110,4 @@ void renderWeapon(void)
 		}
 	}
 }
+

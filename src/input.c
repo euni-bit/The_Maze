@@ -77,4 +77,10 @@ void handleInput(void)
             currentWeaponFrame = 0;
         }
     }
+
+	if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_r)
+	{
+		isRaining = !isRaining;
+		printf("Rain toggled %s.\n", isRaining ? "on" : "off");
+	}
 }

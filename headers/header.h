@@ -38,6 +38,8 @@
 
 #define NUM_WEAPON_FRAMES 3
 
+#define MAX_RAINDROPS 200
+
 typedef uint32_t color_t;
 
 /* Global Game State */
@@ -177,5 +179,20 @@ void updateWeaponAnimation(void);
 
 /* Rain Functions and Structure */
 extern bool isRaining;
+void initializeRain(void);
+void updateRain(float DeltaTime);
+void renderRain(void);
+
+typedef struct raindrop_s
+{
+	float x;
+	float y;
+	float speed;
+	int width;
+	int height;
+}
+raindrop_t;
+
+extern raindrop_t raindrops[MAX_RAINDROPS];
 
 #endif /*HEADER_H*/
