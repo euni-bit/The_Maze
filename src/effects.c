@@ -33,6 +33,6 @@ void renderRain(void)
 {
     for (int i = 0; i < MAX_RAINDROPS; i++)
     {
-        drawRect((int)raindrops[i].x, (int)raindrops[i].y, 2, 5, 0xFF0000FF);
+        drawRect((int)raindrops[i].x, (int)raindrops[i].y, 2, 5, 0xFFFFFFFF);
     }
 }
