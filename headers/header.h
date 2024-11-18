@@ -1,6 +1,7 @@
 #ifndef HEADER_H
 #define HEADER_H
 
+/* Libraries */
 #include <SDL2/SDL.h>
 #include <stdint.h>
 #include <math.h>
@@ -11,7 +12,6 @@
 
 
 /* Constants */
-
 #define PI 3.14159265
 #define TWO_PI 6.28318530
 
@@ -38,11 +38,13 @@
 
 typedef uint32_t color_t;
 
-/* Process Input */
-void handleInput(void);
+/* Global Game State */
 extern bool GameRunning;
 
-/* Functions-variables-structs for draw */
+/*Input Functions*/
+void handleInput(void);
+
+/* Drawing Functions */
 
 bool initializeWindow(void);
 void destroyWindow(void);
@@ -53,13 +55,14 @@ void drawPixel(int x, int y, color_t color);
 void drawRect(int x, int y, int width, int height, color_t color);
 void drawLine(int x0, int y0, int x1, int y1, color_t color);
 
-/* Functions-variables-structs for map */
+/* Map Functions */
+
 bool DetectCollision(float x, float y);
 bool isInsideMap(float x, float y);
 void renderMap(void);
 int getMapValue(int row, int col);
 
-/* Functions-variables-structs for player */
+/* Player Structure and Functions */
 
 /**
  * struct player_s - struct for the textures
@@ -92,7 +95,7 @@ extern player_t player;
 void movePlayer(float DeltaTime);
 void renderPlayer(void);
 
-/* Functions-variables-structs for ray */
+/* Raycasting Structure and Functions */
 
 /**
  * struct ray_s - struct for the textures
@@ -127,7 +130,7 @@ void renderRays(void);
 void horzIntersection(float rayAngle);
 void vertIntersection(float rayAngle);
 
-/* Functions-variables-structs for textures */
+/* Texture Structure and Functions */
 
 /**
  * struct texture_s - struct for the textures
@@ -151,8 +154,18 @@ texture_t wallTextures[NUM_TEXTURES];
 void WallTexturesready(void);
 void freeWallTextures(void);
 
-/* Functions-variables-structs for walls */
-
+/* Wall rendering */
 void renderWall(void);
+
+/* Weapon (HUD) Functions and Variables */
+extern upng_t *weaponTexture;
+extern color_t *weaponTextureBuffer;
+extern int weaponWidth, weaponHeight;
+
+void renderWeapon(void);
+void loadWeaponTexture(void);
+void updateWeaponAnimation(void);
+void handleWeaponInput(SDL_Event event);
+void freeWeaponTexture(void);
 
 #endif /*HEADER_H*/

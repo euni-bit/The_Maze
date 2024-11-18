@@ -50,3 +50,25 @@ void drawLine(int x0, int y0, int x1, int y1, color_t color)
 		currentY += yIncrement;
 	}
 }
+
+void renderWeapon(void)
+{
+    if (weaponTextureBuffer == NULL) {
+        printf("Error: weaponTextureBuffer is NULL. Skipping rendering.\n");
+        return;
+    }
+
+    int x = (SCREEN_WIDTH - weaponWidth) / 2;
+    int y = (SCREEN_HEIGHT - weaponHeight) - 20;
+
+    for (int i = 0; i < weaponHeight; i++) {
+        for (int j = 0; j < weaponWidth; j++) {
+            color_t texelColor = weaponTextureBuffer[i * weaponWidth + j];
+
+            if ((texelColor & 0xFF000000) != 0)
+			{
+                drawPixel(x + j, y + i, texelColor);
+            }
+        }
+    }
+}

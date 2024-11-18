@@ -22,6 +22,7 @@ void setup_game(void)
 	player.turnSpeed = 45 * (PI / 180);
 	player.rotationAngle = PI / 2;
 	WallTexturesready();
+	loadWeaponTexture();
 }
 
 
@@ -60,7 +61,7 @@ void render_game(void)
 	renderMap();
 	renderRays();
 	renderPlayer();
-
+	renderWeapon();
 	renderColorBuffer();
 }
 
@@ -71,6 +72,7 @@ void destroy_game(void)
 {
 	freeWallTextures();
 	destroyWindow();
+	freeWeaponTexture();
 }
 
 /**
