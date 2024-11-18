@@ -4,6 +4,9 @@ upng_t *weaponTexture = NULL;
 color_t *weaponTextureBuffer = NULL;
 int weaponWidth = 0;
 int weaponHeight = 0;
+upng_t *weaponFrames[NUM_WEAPON_FRAMES];
+int currentWeaponFrame = 0;
+int weaponAnimationTimer = 0;
 
 static const char *textureFileNames[NUM_TEXTURES] = {
 	"./images/redbrick.png",
@@ -88,6 +91,31 @@ void loadWeaponTexture(void)
 	{
 		printf("Failed to load weapon texture: %s\n", "./images/weapon.png");
 	}
+
+	char filename[50];
+	for (int i = 0; i < NUM_WEAPON_FRAMES; i++)
+	{
+		sprintf(filename, "./images/weapon_frame_%d.png", i + 1);
+		weaponFrames[i] = upng_new_from_file(filename);
+		if (weaponFrames[i] != NULL)
+		{
+			upng_decode(weaponFrames[i]);
+			if (upng_get_error(weaponFrames[i]) == UPNG_EOK)
+			{
+				printf("Weapon frame %d loaded succesfully: %s\n", i + 1, filename);
+			}
+			else
+			{
+				printf("Error decoding weapon frame %d: %s\n", i + 1, filename);
+				upng_free(weaponFrames[i]);
+				weaponFrames[i] = NULL;
+			}
+		}
+		else
+		{
+			printf("Failed to load weapon frame %d: %s\n", i + 1, filename);
+		}
+	}
 }
 
 /**
@@ -100,5 +128,14 @@ void freeWeaponTexture(void)
 	{
 		upng_free(weaponTexture);
 		weaponTexture = NULL;
+		weaponTextureBuffer = NULL;
+	}
+	for (int i = 0; i < NUM_WEAPON_FRAMES; i++)
+	{
+		if (weaponFrames[i] != NULL)
+		{
+			upng_free(weaponFrames[i]);
+			weaponFrames[i] = NULL;
+		}
 	}
 }

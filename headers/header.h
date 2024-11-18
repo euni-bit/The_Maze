@@ -36,6 +36,8 @@
 
 #define NUM_TEXTURES 8
 
+#define NUM_WEAPON_FRAMES 3
+
 typedef uint32_t color_t;
 
 /* Global Game State */
@@ -157,15 +159,23 @@ void freeWallTextures(void);
 /* Wall rendering */
 void renderWall(void);
 
-/* Weapon (HUD) Functions and Variables */
+/* Weapon Animation Functions and Variables */
 extern upng_t *weaponTexture;
 extern color_t *weaponTextureBuffer;
 extern int weaponWidth, weaponHeight;
+extern upng_t *weaponFrames[NUM_WEAPON_FRAMES];
+extern int currentWeaponFrame;
+extern int weaponAnimationTimer;
+extern bool isWeaponFiring;
 
 void renderWeapon(void);
 void loadWeaponTexture(void);
 void updateWeaponAnimation(void);
 void handleWeaponInput(SDL_Event event);
 void freeWeaponTexture(void);
+void updateWeaponAnimation(void);
+
+/* Rain Functions and Structure */
+extern bool isRaining;
 
 #endif /*HEADER_H*/

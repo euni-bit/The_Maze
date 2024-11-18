@@ -50,25 +50,50 @@ void drawLine(int x0, int y0, int x1, int y1, color_t color)
 		currentY += yIncrement;
 	}
 }
+/**
+ * render_game - calls all functions needed for on-screen rendering
+ *
+*/
+void render_game(void)
+{
+	clearColorBuffer(0xFF000000);
+
+	renderWall();
+
+	renderMap();
+	renderRays();
+	renderPlayer();
+	renderWeapon();
+	renderColorBuffer();
+}
 
 void renderWeapon(void)
 {
-    if (weaponTextureBuffer == NULL) {
-        printf("Error: weaponTextureBuffer is NULL. Skipping rendering.\n");
-        return;
+    upng_t *currentTexture = (isWeaponFiring) ? weaponFrames[currentWeaponFrame] : weaponTexture;
+
+	if (currentTexture == NULL)
+	{
+		printf("Error: Current weapon texture is NULL. Skipping rendering.\n");
+		return;
     }
 
-    int x = (SCREEN_WIDTH - weaponWidth) / 2;
-    int y = (SCREEN_HEIGHT - weaponHeight) - 20;
+	color_t *buffer= (color_t *)upng_get_buffer(currentTexture);
+	int width = upng_get_width(currentTexture);
+	int height = upng_get_height(currentTexture);
 
-    for (int i = 0; i < weaponHeight; i++) {
-        for (int j = 0; j < weaponWidth; j++) {
-            color_t texelColor = weaponTextureBuffer[i * weaponWidth + j];
+	int x = (SCREEN_WIDTH - width) / 2;
+	int y = (SCREEN_HEIGHT - height) - 20;
 
-            if ((texelColor & 0xFF000000) != 0)
+	for (int i = 0; i < height; i++)
+	{
+		for (int j = 0; j < width; j++)
+		{
+			color_t texelColor = buffer[i * width + j];
+
+			if ((texelColor & 0xFF000000) != 0)
 			{
-                drawPixel(x + j, y + i, texelColor);
-            }
-        }
-    }
+				drawPixel(x + j, y + i, texelColor);
+			}
+		}
+	}
 }

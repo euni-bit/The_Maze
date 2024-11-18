@@ -3,6 +3,8 @@
 bool GameRunning = false;
 int TicksLastFrame;
 player_t player;
+bool isWeaponFiring = false;
+bool isRaining = false;
 
 /**
  * setup_game - initialize player variables and load wall textures
@@ -46,23 +48,28 @@ void update_game(void)
 
 	movePlayer(DeltaTime);
 	castAllRays();
+	updateWeaponAnimation();
 }
 
 /**
- * render_game - calls all functions needed for on-screen rendering
- *
-*/
-void render_game(void)
+ * updateWeaponAnimation - Updates weapon animation frames
+ */
+void updateWeaponAnimation(void)
 {
-	clearColorBuffer(0xFF000000);
-
-	renderWall();
-
-	renderMap();
-	renderRays();
-	renderPlayer();
-	renderWeapon();
-	renderColorBuffer();
+	if (isWeaponFiring)
+	{
+		weaponAnimationTimer++;
+		if (weaponAnimationTimer >= 5)
+		{
+			weaponAnimationTimer = 0;
+			currentWeaponFrame++;
+			if (currentWeaponFrame >= NUM_WEAPON_FRAMES)
+			{
+				currentWeaponFrame = 0;
+				isWeaponFiring = false;
+			}
+		}
+	}
 }
 
 /**
@@ -73,6 +80,7 @@ void destroy_game(void)
 	freeWallTextures();
 	destroyWindow();
 	freeWeaponTexture();
+	SDL_Quit();
 }
 
 /**

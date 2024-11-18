@@ -68,4 +68,13 @@ void handleInput(void)
 		SDL_KEYDOWN_FUNC(event);
 	else if (event.type == SDL_KEYUP)
 		SDL_KEYUP_FUNC(event);
+
+	if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
+	{
+		if (!isWeaponFiring)
+		{
+            isWeaponFiring = true;
+            currentWeaponFrame = 0;
+        }
+    }
 }
